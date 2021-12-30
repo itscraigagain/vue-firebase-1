@@ -2,6 +2,7 @@
     <v-row justify="center">
         <v-col md="4">
             <v-card elevation="2">
+                <v-img src="@/assets/login.png"></v-img>
                 <v-card-title>Register</v-card-title>
                 <v-card-text>
                     <v-form

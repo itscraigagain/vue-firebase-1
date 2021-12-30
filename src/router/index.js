@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Register from '../views/auth/Register'
 import Login from '../views/auth/Login'
 import Dashboard from '../views/Dashboard'
+import Profile from '../views/profile'
 import { auth } from '../firebase'
 
 Vue.use(VueRouter)
@@ -30,7 +31,16 @@ const routes = [
     component: Dashboard,
     meta: {
       auth: true
-    }
+  },
+  
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
+    meta: {
+      auth: true
+    },
   }
 ]
 

@@ -1,11 +1,11 @@
 <template>
-    <v-app>
+    <v-app style="background-color:#EBF6FF">
         <v-app-bar
             app
             color="white"
 			flat
         >
-            <v-btn to="/" text>VueFirebase</v-btn>
+            <v-btn to="/" text><v-img max-width="172px" contain src="@/assets/g871.png"></v-img></v-btn>
 			<v-spacer></v-spacer>
 			<div v-if="!isAuthenticated">
 				<v-btn :to="{ name: 'Login' }" text>Login</v-btn>
