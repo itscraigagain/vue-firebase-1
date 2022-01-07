@@ -1,151 +1,237 @@
 <template>
-  <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
-      </v-col>
+  <div>
+    <v-container>
+      <v-row class="mb-4">
+        <v-col justify="center" align="center">
 
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
+        <v-img max-width="300px" src="@/assets/logo.jpg">
 
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community</a>
-        </p>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          What's next?
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
-        </v-row>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Important Links
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-row>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Ecosystem
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+        </v-img>
+        </v-col>
+      </v-row>
+      <v-layout wrap>
+        <v-flex sm12 md6 offset-md3>
+          <v-card elevation="4" light tag="section">
+            <v-card-title class="d-none d-md-block">
+              <v-layout align-center>
+                <h3  class="headline ">
+                  Property Spotter
+                </h3>
+                <p>{{this.errorMsg}}</p>
+              </v-layout>
+              <v-spacer/>
+                <v-btn class="d-none d-md-block" @click="value=2">PDash Login</v-btn>
+            </v-card-title>
+            <v-divider></v-divider>
+            <v-overlay :value="isLoading">
+              <v-progress-circular :value="20"></v-progress-circular>
+            </v-overlay>
+            <v-tabs
+              v-model="value"
+              color="primary"
+              slider-color="primary"
+              grow
+            >
+              <v-tab>Login</v-tab>
+              <v-tab>Sign up</v-tab>
+              <v-tab class="d-none">Admin</v-tab>
+              <v-tab class="d-none">Forgot Password</v-tab>
+            </v-tabs>
+            <v-tabs-items v-model="value">
+              <v-tab-item>
+            <v-card-text>
+              <p>Sign in with your Email and password:</p>
+              <v-form>
+                <v-text-field
+                              outline
+                              label="Email"
+                              type="text"
+                              :rules="emailRules"
+                              v-model="email"></v-text-field>
+                <v-text-field
+                              outline
+                              hide-details
+                              label="Password"
+                              :rules="passwordRules"
+                              type="password"
+                              v-model="password"></v-text-field>
+              </v-form>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }">
+              <v-btn @click="value=1" color="info" >
+                Sign up
+              </v-btn>
+              <v-btn @click="value=3" color="warning" x-small  style="font-size: 8px" text class="body-2" >
+                Forgot password?
+              </v-btn>
+              
+              <v-spacer></v-spacer>
+              <v-btn color="info" :large="$vuetify.breakpoint.smAndUp" @click="login">
+                <v-icon left>mdi-lock</v-icon>
+                Login
+              </v-btn>
+            </v-card-actions>
+              </v-tab-item>
+              <v-tab-item>
+                <v-card-text>
+              <p>Sign up by supplying an email address and password:</p>
+              <v-form  ref="form" v-model="valid" lazy-validation>
+                 <v-text-field
+                              outline
+                              label="Name"
+                              type="text"
+                              required
+                              v-model="name"></v-text-field>
+                <v-text-field
+                              outline
+                              label="Email"
+                              :rules="emailRules"
+                              type="text"
+                              v-model="email"></v-text-field>
+                <v-text-field
+                              outline
+                              hide-details
+                              label="Password"
+                              :rules="passwordRules"
+                              type="password"
+                              v-model="password"></v-text-field>
+                <v-text-field
+                              outline
+                              hide-details
+                              label="Confirm Password"
+                              :rules="passwordRules"
+                              type="password"
+                              ></v-text-field>
+              </v-form>
+            </v-card-text>
+            <v-card-actions :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }">
+              
+              <v-spacer></v-spacer>
+              <v-btn :loading="isLoading" color="info" :large="$vuetify.breakpoint.smAndUp" >
+                <v-icon left>mdi-lock</v-icon>
+                Signup
+              </v-btn>
+            </v-card-actions>
+              </v-tab-item>
+              <v-tab-item>
+            <v-card-text>
+              <p>Sign in with your email and password:</p>
+              <v-form>
+                <v-text-field
+                              outline
+                              label="Email"
+                              type="text"
+                              v-model="email"></v-text-field>
+                <v-text-field
+                              outline
+                              hide-details
+                              label="Password"
+                              type="password"
+                              v-model="password"></v-text-field>
+              </v-form>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }">
+              
+              
+              <v-spacer></v-spacer>
+              <v-btn color="info" :large="$vuetify.breakpoint.smAndUp" >
+                <v-icon left>mdi-lock</v-icon>
+                Login
+              </v-btn>
+            </v-card-actions>
+              </v-tab-item>
+              <v-tab-item>
+                <v-card-text>
+              <p>Enter your email address to get a reset password link:</p>
+              <v-form>
+                <v-text-field
+                              outline
+                              label="Email Address"
+                              type="text"
+                              v-model="email"></v-text-field>
+              </v-form>
+            </v-card-text>
+            <v-card-actions :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }">
+              
+              <v-spacer></v-spacer>
+              <v-btn color="info" :large="$vuetify.breakpoint.smAndUp" > 
+                <v-icon left>mdi-lock</v-icon>
+                Signup
+              </v-btn>
+            </v-card-actions>
+              </v-tab-item>
+            </v-tabs-items>
+            
+          </v-card>
+        </v-flex>
+        <v-flex sm12 md6 offset-md3>
+          <v-layout align-center justify-space-between>
+            <p class="caption my-3">
+              <a href="#">Privacy Policy</a>
+              |
+              <a href="#">Terms of Service</a>
+            </p>
+            <p class="caption my-3">Powered by <a href="#">Looper</a></p>
+          </v-layout>
+        </v-flex>
+      </v-layout>
+    </v-container>
+</div>
 </template>
 
 <script>
+// import firebase from 'firebase'
+// import router from '@/router'
+// import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+// const auth = getAuth();
+
   export default {
     name: 'HelloWorld',
 
-    data: () => ({
-      ecosystem: [
-        {
-          text: 'vuetify-loader',
-          href: 'https://github.com/vuetifyjs/vuetify-loader',
-        },
-        {
-          text: 'github',
-          href: 'https://github.com/vuetifyjs/vuetify',
-        },
-        {
-          text: 'awesome-vuetify',
-          href: 'https://github.com/vuetifyjs/awesome-vuetify',
-        },
+     data () {
+    return {
+      show: false,
+      valid: false,
+      value: 0,
+      name: '',
+      email: '',
+      password: '',
+      form: false,
+      errorMsg: '',
+      isLoading : false,
+      emailRules: [
+        (v) => !!v || "Email is required",
+        (v) => /.+@.+/.test(v) || "Email must be valid",
       ],
-      importantLinks: [
-        {
-          text: 'Documentation',
-          href: 'https://vuetifyjs.com',
-        },
-        {
-          text: 'Chat',
-          href: 'https://community.vuetifyjs.com',
-        },
-        {
-          text: 'Made with Vuetify',
-          href: 'https://madewithvuejs.com/vuetify',
-        },
-        {
-          text: 'Twitter',
-          href: 'https://twitter.com/vuetifyjs',
-        },
-        {
-          text: 'Articles',
-          href: 'https://medium.com/vuetify',
-        },
+      passwordRules: [
+        (v) => !!v || "Password is required",
+        (v) => v.length >= 8 || "Password must be 8 characters or more",
       ],
-      whatsNext: [
-        {
-          text: 'Explore components',
-          href: 'https://vuetifyjs.com/components/api-explorer',
+    }},
+    methods: {
+      login() {
+            const valid = this.$refs.form.validate()
+            if(valid) {
+                this.isLoading = true
+                this.$store.dispatch('login', {
+                    email: this.email,
+                    password: this.password
+                })
+            } 
         },
-        {
-          text: 'Select a layout',
-          href: 'https://vuetifyjs.com/getting-started/pre-made-layouts',
-        },
-        {
-          text: 'Frequently Asked Questions',
-          href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-        },
-      ],
-    }),
+      signUpWithEmailAndPassword() {
+       alert()
+      }
+  }
   }
 </script>
+<style>
+.v-btn,
+.v-card {
+  border-radius : 4px }
+.v-card__title {
+  text-transform : uppercase }
+</style>

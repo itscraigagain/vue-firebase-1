@@ -23,7 +23,11 @@ export default new Vuex.Store({
 
       // create user profile object
       await fb.usersCollection.doc(user.uid).set({
-        name: form.name
+        name: form.name,
+        phone: "",
+        address: "",
+        postcode : "",
+        agent: form.estateAgent,
       })
 
       // fetch user profile

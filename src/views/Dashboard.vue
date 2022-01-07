@@ -1,46 +1,10 @@
 <template>
     <div class="dashboard">
-        <h1>Hi, {{ userProfile.name }}</h1>
-        <GameForm @game:added="addGame" />
-        <v-row>
-            <v-col md="4" v-for="(game, index) in games" :key="game.id">
-                <v-card>
-                    <v-img
-                        v-if="game.image"
-                        height="250"
-                        :src="game.image"
-                        lazy-src="https://via.placeholder.com/250"
-                    >
-                    </v-img>
-                    <v-card-title>{{ game.title }}</v-card-title>
-                    <v-card-text>
-                        <p class="subtitle-1">Developer: {{ game.developer }}</p>
-                        <p class="subtitle-1">Publisher: {{ game.publisher }}</p>
-                        <p>{{ game.description }}</p>
-                    </v-card-text>
-                    <v-card-actions>
-                        <GameForm :game="game" :index="index" @game:updated="updateGame" />
-                        <v-btn color="red" @click="deleteConfirm(game.id, game.title)" text>Delete</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-col>
-        </v-row>
+        
+                <homeScreen/>
+           
 
-        <v-dialog
-            v-model="deleteDialog"
-            max-width="400"
-        >
-            <v-card>
-                <v-card-title class="headline">
-                    Delete Game?
-                </v-card-title>
-                <v-card-text>Are you sure you want to delete <b>{{ pTitle }}</b>?</v-card-text>
-                <v-card-actions>
-                    <v-btn text color="red" @click="deleteGame">Delete</v-btn>
-                    <v-btn @click="deleteDialog = false" text color="secondary">Close</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+        
     </div>
 </template>
 
@@ -48,9 +12,11 @@
 import { mapState } from 'vuex'
 import GameForm from '@/components/GameForm'
 import { auth, storage, gamesCollection } from '../firebase'
+import homeScreen from '@/components/ActivityHome.vue'
 export default {
     components: {
-        GameForm
+        GameForm,
+        homeScreen
     },
     data() {
         return {
@@ -61,7 +27,10 @@ export default {
         }
     },
     computed: {
-        ...mapState(['userProfile'])
+        ...mapState(['userProfile']),
+         function() {
+            console.log(this.$store.state.userProfile)
+        }
     },
     methods: {
         async addGame(doc) {
@@ -143,7 +112,9 @@ export default {
         }
     },
     async mounted() {
-        await this.getGames()
+        await this.getGames(),
+        window.scrollTo(0, 0)
     }
+  
 }
 </script>
