@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <v-app id="app" style="background-color: #509EDE">
     <v-overlay v-model="isLoading">
     </v-overlay>
@@ -71,6 +72,31 @@
     
   </v-bottom-navigation>
   </v-app>
+=======
+    <v-app style="background-color:#EBF6FF">
+        <v-app-bar
+            app
+            color="white"
+			flat
+        >
+            <v-btn to="/" text><v-img max-width="172px" contain src="@/assets/g871.png"></v-img></v-btn>
+			<v-spacer></v-spacer>
+			<div v-if="!isAuthenticated">
+				<v-btn :to="{ name: 'Login' }" text>Login</v-btn>
+				<v-btn :to="{ name: 'Register' }" text>Register</v-btn>
+			</div>
+			<div v-else>
+				<v-btn @click="logout" text>Logout</v-btn>
+			</div>
+        </v-app-bar>
+
+        <v-main>
+			<v-container>
+				<router-view />
+			</v-container>
+        </v-main>
+    </v-app>
+>>>>>>> 55f8bde27240e28084f7da248cc0f9ef1c4803b7
 </template>
 
 <script>

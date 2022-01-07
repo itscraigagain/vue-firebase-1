@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div>
     <v-row class="mt-4" justify="center">
       <v-col md="4" class="mt-4">
@@ -56,12 +57,61 @@
       </v-col>
     </v-row> -->
   </div>
+=======
+  <v-row justify="center">
+    <v-col md="4">
+      <v-card elevation="2">
+        <v-img src="@/assets/login.png"></v-img>
+        <v-card-title>Login</v-card-title>
+        <v-card-text>
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-text-field
+              v-model="email"
+              :rules="emailRules"
+              label="Email"
+              outlined
+              required
+            >
+            </v-text-field>
+
+            <v-text-field
+              v-model="password"
+              :rules="passwordRules"
+              label="Password"
+              outlined
+              required
+              :type="show ? 'text' : 'password'"
+              @click:append="show = !show"
+              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+            >
+            </v-text-field>
+
+            <v-btn
+              elevation="2"
+              color="primary"
+              @click="login"
+              :loading="isLoading"
+            >
+              Login
+            </v-btn>
+          </v-form>
+
+          <p class="pt-2">
+            Create an account?
+            <router-link :to="{ name: 'Register' }">Register</router-link>
+          </p>
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
+>>>>>>> 55f8bde27240e28084f7da248cc0f9ef1c4803b7
 </template>
 
 
 <script>
 import HelloWorld from '@/components/HelloWorld.vue'
 export default {
+<<<<<<< HEAD
     components : {
        HelloWorld
        },
@@ -69,6 +119,10 @@ export default {
     return {
     
    
+=======
+  data() {
+    return {
+>>>>>>> 55f8bde27240e28084f7da248cc0f9ef1c4803b7
       isLoading: false,
       show: false,
       valid: false,
@@ -93,6 +147,12 @@ export default {
           email: this.email,
           password: this.password,
         });
+<<<<<<< HEAD
+=======
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 2000);
+>>>>>>> 55f8bde27240e28084f7da248cc0f9ef1c4803b7
       }
     },
   },

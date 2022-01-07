@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <v-row class="mt-2" justify="center">
     <v-col class="mt-4" md="4">
       <v-card style="background-color:#F7F7F7" class="mt-3" elevation="2">
@@ -18,6 +19,27 @@
               required
             >
             </v-text-field>
+=======
+    <v-row justify="center">
+        <v-col md="4">
+            <v-card elevation="2">
+                <v-img src="@/assets/login.png"></v-img>
+                <v-card-title>Register</v-card-title>
+                <v-card-text>
+                    <v-form
+                    ref="form"
+                    v-model="valid"
+                    lazy-validation
+                    >
+                        <v-text-field
+                            v-model="name"
+                            :rules="nameRules"
+                            label="Name"
+                            outlined
+                            required
+                        >
+                        </v-text-field>
+>>>>>>> 55f8bde27240e28084f7da248cc0f9ef1c4803b7
 
             <v-text-field
               v-model="email"

@@ -4,7 +4,11 @@ import Home from '../views/Home.vue'
 import Register from '../views/auth/Register'
 import Login from '../views/auth/Login'
 import Dashboard from '../views/Dashboard'
+<<<<<<< HEAD
 import Spotting from '../views/spotting'
+=======
+import Profile from '../views/profile'
+>>>>>>> 55f8bde27240e28084f7da248cc0f9ef1c4803b7
 import { auth } from '../firebase'
 
 Vue.use(VueRouter)
@@ -32,6 +36,7 @@ const routes = [
     component: Dashboard,
     meta: {
       auth: true
+<<<<<<< HEAD
     }
   },
   {
@@ -70,6 +75,19 @@ const routes = [
   //     auth: true
   //   }
   // },
+=======
+  },
+  
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
+    meta: {
+      auth: true
+    },
+  }
+>>>>>>> 55f8bde27240e28084f7da248cc0f9ef1c4803b7
 ]
 
 const router = new VueRouter({
